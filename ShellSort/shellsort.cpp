@@ -1,7 +1,18 @@
 //
 // Created by Victor F on 21/09/2025.
 //
-
+void shellSort (int vet[], int n) {
+    for (int gap = n / 2; gap > 0; gap /= 2) {
+    for (int i = gap; i < n; i++) {
+    int aux = vet [i];
+    int j;
+    for (j = i; j >= gap && vet [j - gap] > aux; j -= gap) {
+    vet[j] = vet [j - gap];
+       }
+    vet [j] = aux;
+      }
+    }
+}
 
 void executarShellSort(char tipo, int n) {
     int* vet = new int[n]; // inicializa o vetor de acordo com o tamanho de entrada fornecido
