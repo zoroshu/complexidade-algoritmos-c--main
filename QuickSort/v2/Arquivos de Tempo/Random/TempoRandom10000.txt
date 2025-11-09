@@ -1,0 +1,2 @@
+Tamanho:10000
+Tempo:0.003115s
