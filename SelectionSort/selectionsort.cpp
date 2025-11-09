@@ -2,26 +2,27 @@
 // Created by Victor F on 21/09/2025.
 //
 
-void selectionSort(int vet[], int n){
-    int index_minimo,aux;
+void selectionSort(int vet[], int n){                 // Ordena 'vet' (tamanho n) por Selection Sort
+    int index_minimo, aux;                            // index_minimo: índice do menor na região não ordenada; aux: temporário
 
-    for ( int i = 0; i < n - 1; i++ ){
-    index_minimo = i;
-    for ( int j = i + 1; j < n; j++ ){
-    if ( vet[j] < vet[index_minimo] ){
-        index_minimo = j;
-       }
-     }
-     if (index_minimo != i){
-     aux = vet[i];
-     vet[i] = vet[index_minimo];
-     vet[index_minimo] = aux;
-      }
+    for ( int i = 0; i < n - 1; i++ ){                // Para cada posição i (exceto a última)...
+        index_minimo = i;                             // ...supõe que o menor está em i
+
+        for ( int j = i + 1; j < n; j++ ){            // Varre o restante do vetor (da zona não ordenada)
+            if ( vet[j] < vet[index_minimo] ){        // Se achar elemento menor que o atual mínimo...
+                index_minimo = j;                     // ...atualiza o índice do menor
+            }
+        }
+        if (index_minimo != i){                       // Se o menor não está em i...
+            aux = vet[i];                             // ...guarda vet[i]
+            vet[i] = vet[index_minimo];               // ...traz o menor para a posição i
+            vet[index_minimo] = aux;                  // ...coloca o antigo vet[i] na posição do menor
+        }                                             // Ao final, vet[i] fica na posição correta
     }
-}
+}                                                     // Fim da função
 
 void executarSelectionSort(char tipo, int n) {
-    int* vet = new int[n]; // inicializa o vetor de acordo com o tamanho de entrada fornecido
+    int* vet = new int[n];
 
     bool crescente = (tipo == 'c' || tipo == 'C');
     bool decrescente = (tipo == 'd' || tipo == 'D');
@@ -41,24 +42,25 @@ void executarSelectionSort(char tipo, int n) {
         prefixo = "Random";
     }
 
-    // Caminhos completos para os arquivos
-    string diretorioEntrada = "SelectionSort/Arquivos de Entrada/" + subpasta + "Entrada" + prefixo + to_string(n) + ".txt";
-    string diretorioSaida   = "SelectionSort/Arquivos de Saida/"   + subpasta + "Saida"   + prefixo + to_string(n) + ".txt";
-    string diretorioTempo   = "SelectionSort/Arquivos de Tempo/"   + subpasta + "Tempo"   + prefixo + to_string(n) + ".txt";
+    string algoritmo = "SelectionSort/"; // caminho para salvar arquivo
 
-    // salva arquivo de entrada de acordo com prefixo já estabelecido
-    salvarArquivos(diretorioEntrada,vet,n);
+    string diretorioEntrada = algoritmo + "Arquivos de Entrada/" + subpasta +
+                              "Entrada" + prefixo + to_string(n) + ".txt";
+    string diretorioSaida   = algoritmo + "Arquivos de Saida/"   + subpasta +
+                              "Saida" + prefixo + to_string(n) + ".txt";
+    string diretorioTempo   = algoritmo + "Arquivos de Tempo/"   + subpasta +
+                              "Tempo" + prefixo + to_string(n) + ".txt";
 
-    cout << "Iniciando Ordenacao...\n";
+    salvarArquivos(diretorioEntrada, vet, n);
 
-    auto start = chrono::high_resolution_clock::now(); // inicia a contagem de tempo
-    SelectionSort(vet, n); // realiza a ordenação
-    cout<< "Vetor ordenado!" << endl;
-    cout << "Salvando valores em seus respectivos arquivos..." << endl;
-    auto stop = chrono::high_resolution_clock::now(); // finaliza a contagem de tempo
-    chrono::duration<double> duration = stop - start;// calcula a duração da função de inserção em s
-    salvarTempo(diretorioTempo,n,duration.count()); // salva a duração em um arquivo
-    salvarArquivos(diretorioSaida,vet,n); // salva o arquivo de saida com vetor já ordenado
-
-    delete[] vet; // deleta o vetor instanciado
+    auto start = chrono::high_resolution_clock::now();
+    cout << "Iniciando Ordenacao... \n";
+    selectionSort(vet, n);
+    auto stop = chrono::high_resolution_clock::now();
+    chrono::duration<double> duration = stop - start;
+    cout << "Vetor ordenado! \n";
+    salvarTempo(diretorioTempo, n, duration.count());
+    salvarArquivos(diretorioSaida, vet, n);
+    cout << "Arquivos Salvos em seus respectivos diretorios! \n";
+    delete[] vet;
 }

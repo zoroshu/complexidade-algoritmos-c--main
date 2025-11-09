@@ -25,7 +25,7 @@ void insertionSort(int arr[], int n) {
 }
 
 void executarInsertionSort(char tipo, int n) {
-    int* vet = new int[n]; // inicializa o vetor de acordo com o tamanho de entrada fornecido
+    int* vet = new int[n];
 
     bool crescente = (tipo == 'c' || tipo == 'C');
     bool decrescente = (tipo == 'd' || tipo == 'D');
@@ -45,25 +45,26 @@ void executarInsertionSort(char tipo, int n) {
         prefixo = "Random";
     }
 
-    // Caminhos completos para os arquivos
-    string diretorioEntrada = "InsertionSort/Arquivos de Entrada/" + subpasta + "Entrada" + prefixo + to_string(n) + ".txt";
-    string diretorioSaida   = "InsertionSort/Arquivos de Saida/"   + subpasta + "Saida"   + prefixo + to_string(n) + ".txt";
-    string diretorioTempo   = "InsertionSort/Arquivos de Tempo/"   + subpasta + "Tempo"   + prefixo + to_string(n) + ".txt";
+    string algoritmo = "InsertionSort/"; // caminho para salvar arquivo
 
-    // salva arquivo de entrada de acordo com prefixo já estabelecido
-    salvarArquivos(diretorioEntrada,vet,n);
+    string diretorioEntrada = algoritmo + "Arquivos de Entrada/" + subpasta +
+                              "Entrada" + prefixo + to_string(n) + ".txt";
+    string diretorioSaida   = algoritmo + "Arquivos de Saida/"   + subpasta +
+                              "Saida" + prefixo + to_string(n) + ".txt";
+    string diretorioTempo   = algoritmo + "Arquivos de Tempo/"   + subpasta +
+                              "Tempo" + prefixo + to_string(n) + ".txt";
 
-    cout << "Iniciando Ordenacao...\n";
+    salvarArquivos(diretorioEntrada, vet, n);
 
-    auto start = chrono::high_resolution_clock::now(); // inicia a contagem de tempo
-    insertionSort(vet, n); // realiza a ordenação
-    cout<< "Vetor ordenado!" << endl;
-    cout << "Salvando valores em seus respectivos arquivos..." << endl;
-    auto stop = chrono::high_resolution_clock::now(); // finaliza a contagem de tempo
-    chrono::duration<double> duration = stop - start;// calcula a duração da função de inserção em s
-    salvarTempo(diretorioTempo,n,duration.count()); // salva a duração em um arquivo
-    salvarArquivos(diretorioSaida,vet,n); // salva o arquivo de saida com vetor já ordenado
-
-    delete[] vet; // deleta o vetor instanciado
+    auto start = chrono::high_resolution_clock::now();
+    cout << "Iniciando Ordenacao... \n";
+    insertionSort(vet, n);
+    auto stop = chrono::high_resolution_clock::now();
+    chrono::duration<double> duration = stop - start;
+    cout << "Vetor ordenado! \n";
+    salvarTempo(diretorioTempo, n, duration.count());
+    salvarArquivos(diretorioSaida, vet, n);
+    cout << "Arquivos Salvos em seus respectivos diretorios! \n";
+    delete[] vet;
 }
 

@@ -2,29 +2,29 @@
 // Created by Victor F on 21/09/2025.
 //
 
-void bubbleSort(int* vet, int n){
+void bubbleSort(int* vet, int n){                    // Função que ordena 'vet' (tamanho n) por Bubble Sort
 
-    int i,j, aux;
-    int trocado;
-    for( i = 0 ; i < n - 1; i++){
-    trocado = 0;
+    int i,j, aux;                                     // i e j: índices; aux: variável temporária para troca
+    int trocado;  // flag para detectar se houve troca na passada
+    for( i = 0 ; i < n - 1; i++){                     // Passa n-1 vezes pelo vetor (cada passada coloca 1 elemento no lugar)
+        trocado = 0;                                  // Assume que ainda não houve troca nesta passada
 
-    for (j = 0 ; j < n - i - 1; j++){
-        aux = vet[j];
-        vet[j] = vet[j + 1];
-        vet[j + 1] = aux;
-
-        trocado = 1;
+        for (j = 0 ; j < n - i - 1; j++){             // Varre até o último elemento “não fixado” (n - i - 1)
+            if (vet[j] > vet[j + 1]) {                // Se dois adjacentes estão fora de ordem...
+                aux = vet[j];                         // ...guarda vet[j] em aux
+                vet[j] = vet[j + 1];                  // ...move o menor para a esquerda
+                vet[j + 1] = aux;                     // ...coloca o maior à direita
+                trocado = 1;                          // Marca que houve ao menos uma troca nesta passada
+            }
+        }
+        if (!trocado){                                // Se nenhuma troca ocorreu, o vetor já está ordenado
+            break;                                    // Sai cedo (otimização do melhor caso)
+        }
     }
-    if (!trocado){
-    break;
-    }
-
-    }
-}
+}                                                     // Fim da função
 
 void executarBubbleSort(char tipo, int n) {
-    int* vet = new int[n]; // inicializa o vetor de acordo com o tamanho de entrada fornecido
+    int* vet = new int[n];
 
     bool crescente = (tipo == 'c' || tipo == 'C');
     bool decrescente = (tipo == 'd' || tipo == 'D');
@@ -44,24 +44,27 @@ void executarBubbleSort(char tipo, int n) {
         prefixo = "Random";
     }
 
-    // Caminhos completos para os arquivos
-    string diretorioEntrada = "BubbleSort/Arquivos de Entrada/" + subpasta + "Entrada" + prefixo + to_string(n) + ".txt";
-    string diretorioSaida   = "BubbleSort/Arquivos de Saida/"   + subpasta + "Saida"   + prefixo + to_string(n) + ".txt";
-    string diretorioTempo   = "BubbleSort/Arquivos de Tempo/"   + subpasta + "Tempo"   + prefixo + to_string(n) + ".txt";
+    string algoritmo = "BubbleSort/"; // caminho para salvar arquivo
 
-    // salva arquivo de entrada de acordo com prefixo já estabelecido
-    salvarArquivos(diretorioEntrada,vet,n);
+    string diretorioEntrada = algoritmo + "Arquivos de Entrada/" + subpasta +
+                              "Entrada" + prefixo + to_string(n) + ".txt";
+    string diretorioSaida   = algoritmo + "Arquivos de Saida/"   + subpasta +
+                              "Saida" + prefixo + to_string(n) + ".txt";
+    string diretorioTempo   = algoritmo + "Arquivos de Tempo/"   + subpasta +
+                              "Tempo" + prefixo + to_string(n) + ".txt";
 
-    cout << "Iniciando Ordenacao...\n";
+    salvarArquivos(diretorioEntrada, vet, n);
 
-    auto start = chrono::high_resolution_clock::now(); // inicia a contagem de tempo
-    BubbleSort(vet, n); // realiza a ordenação
-    cout<< "Vetor ordenado!" << endl;
-    cout << "Salvando valores em seus respectivos arquivos..." << endl;
-    auto stop = chrono::high_resolution_clock::now(); // finaliza a contagem de tempo
-    chrono::duration<double> duration = stop - start;// calcula a duração da função de inserção em s
-    salvarTempo(diretorioTempo,n,duration.count()); // salva a duração em um arquivo
-    salvarArquivos(diretorioSaida,vet,n); // salva o arquivo de saida com vetor já ordenado
-
-    delete[] vet; // deleta o vetor instanciado
+    auto start = chrono::high_resolution_clock::now();
+    cout << "Iniciando Ordenacao... \n";
+    bubbleSort(vet, n);
+    auto stop = chrono::high_resolution_clock::now();
+    chrono::duration<double> duration = stop - start;
+    cout << "Vetor ordenado! \n";
+    salvarTempo(diretorioTempo, n, duration.count());
+    salvarArquivos(diretorioSaida, vet, n);
+    cout << "Arquivos Salvos em seus respectivos diretorios! \n";
+    delete[] vet;
 }
+
+

@@ -1,21 +1,26 @@
 //
 // Created by Victor F on 21/09/2025.
 //
-void shellSort (int vet[], int n) {
-    for (int gap = n / 2; gap > 0; gap /= 2) {
-    for (int i = gap; i < n; i++) {
-    int aux = vet [i];
-    int j;
-    for (j = i; j >= gap && vet [j - gap] > aux; j -= gap) {
-    vet[j] = vet [j - gap];
-       }
-    vet [j] = aux;
-      }
+void shellSort (int vet[], int n) {                   // Ordena 'vet' (tamanho n) por Shell Sort
+    for (int gap = n / 2; gap > 0; gap /= 2) {        // Define sequência de gaps (n/2, n/4, ..., 1)
+
+        // Percorremos os elementos a partir do índice "gap"
+        // Cada sub-sequência separada pelo gap será ordenada como no Insertion Sort
+        for (int i = gap; i < n; i++) {               // Para cada elemento na janela deslocada por 'gap'...
+            int aux = vet[i];                         // ...salva o valor atual
+            int j;                                    // ...índice para varrer para trás por passos de 'gap'
+
+            // Move elementos que estão distantes "gap" posições, enquanto forem maiores que aux
+            for (j = i; j >= gap && vet[j - gap] > aux; j -= gap) {
+                vet[j] = vet[j - gap];                // Desloca o elemento maior 'gap' posições à frente
+            }
+            vet[j] = aux;                             // Insere 'aux' na posição correta dentro da subsequência h-espaçada
+        }
     }
-}
+}                                                     // Fim da função
 
 void executarShellSort(char tipo, int n) {
-    int* vet = new int[n]; // inicializa o vetor de acordo com o tamanho de entrada fornecido
+    int* vet = new int[n];
 
     bool crescente = (tipo == 'c' || tipo == 'C');
     bool decrescente = (tipo == 'd' || tipo == 'D');
@@ -35,24 +40,28 @@ void executarShellSort(char tipo, int n) {
         prefixo = "Random";
     }
 
-    // Caminhos completos para os arquivos
-    string diretorioEntrada = "ShellSort/Arquivos de Entrada/" + subpasta + "Entrada" + prefixo + to_string(n) + ".txt";
-    string diretorioSaida   = "ShellSort/Arquivos de Saida/"   + subpasta + "Saida"   + prefixo + to_string(n) + ".txt";
-    string diretorioTempo   = "ShellSort/Arquivos de Tempo/"   + subpasta + "Tempo"   + prefixo + to_string(n) + ".txt";
+    string algoritmo = "ShellSort/"; // caminho para salvar arquivo
 
-    // salva arquivo de entrada de acordo com prefixo já estabelecido
-    salvarArquivos(diretorioEntrada,vet,n);
+    string diretorioEntrada = algoritmo + "Arquivos de Entrada/" + subpasta +
+                              "Entrada" + prefixo + to_string(n) + ".txt";
+    string diretorioSaida   = algoritmo + "Arquivos de Saida/"   + subpasta +
+                              "Saida" + prefixo + to_string(n) + ".txt";
+    string diretorioTempo   = algoritmo + "Arquivos de Tempo/"   + subpasta +
+                              "Tempo" + prefixo + to_string(n) + ".txt";
 
-    cout << "Iniciando Ordenacao...\n";
+    salvarArquivos(diretorioEntrada, vet, n);
 
-    auto start = chrono::high_resolution_clock::now(); // inicia a contagem de tempo
-    ShellSort(vet, n); // realiza a ordenação
-    cout<< "Vetor ordenado!" << endl;
-    cout << "Salvando valores em seus respectivos arquivos..." << endl;
-    auto stop = chrono::high_resolution_clock::now(); // finaliza a contagem de tempo
-    chrono::duration<double> duration = stop - start;// calcula a duração da função de inserção em s
-    salvarTempo(diretorioTempo,n,duration.count()); // salva a duração em um arquivo
-    salvarArquivos(diretorioSaida,vet,n); // salva o arquivo de saida com vetor já ordenado
-
-    delete[] vet; // deleta o vetor instanciado
+    auto start = chrono::high_resolution_clock::now();
+    cout << "Iniciando Ordenacao... \n";
+    shellSort(vet, n);
+    auto stop = chrono::high_resolution_clock::now();
+    chrono::duration<double> duration = stop - start;
+    cout << "Vetor ordenado! \n";
+    salvarTempo(diretorioTempo, n, duration.count());
+    salvarArquivos(diretorioSaida, vet, n);
+    cout << "Arquivos Salvos em seus respectivos diretorios! \n";
+    delete[] vet;
 }
+
+
+

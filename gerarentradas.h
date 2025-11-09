@@ -8,5 +8,7 @@
 void gerarValorCrescente(int arr[], int n);
 void gerarValorDecrescente(int arr[], int n);
 void gerarValorRandom(int arr[], int n);
+bool tamanhoValido(int n);
+bool lerParametros(char &escolha, int &tam);
 
 #endif //GERARENTRADAS_H
