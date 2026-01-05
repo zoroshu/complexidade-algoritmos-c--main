@@ -73,7 +73,7 @@ Os resultados são apresentados por meio de **tabelas**, **gráficos** e **anál
 
 O relatório completo está **anexado ao final deste repositório** em formato PDF:
 
-- [Analise_de_Complexidade_de_Algoritmos_de_Ordenacao_e_Busca.pdf] (Complexidade-de-algoritmos.pdf)
+- 📄 [Análise de Complexidade de Algoritmos de Ordenação e Busca (PDF)](Complexidade-de-algoritmos.pdf)
 
 ---
 
@@ -155,7 +155,7 @@ The results are presented through **tables**, **charts**, and **interpretive ana
 
 The full report is **attached at the end of this repository** in PDF format:
 
- - [Complexity_Analysis_of_Sorting_and_Searching_Algorithms.pdf] (Complexidade-de-algoritmos.pdf)
+- 📄 [Complexity Analysis of Sorting and Searching Algorithms (PDF)](Complexidade-de-algoritmos.pdf)
 
 ---
 
